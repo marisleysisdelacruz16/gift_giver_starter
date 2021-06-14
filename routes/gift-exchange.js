@@ -3,19 +3,34 @@ const GiftExchange = require("../models/gift-exchange")
 const router = express.Router()
 
 router.get("/", async (req,res,next) => {
-    const names = await GiftExchange.returnNames()
-    res.json(names)
+    try {
+        const names = await GiftExchange.returnNames()
+        res.json(names)
+    }
+    catch(err) {
+    next(err)
+    }
 })
 
 router.post("/pairs", async (req,res,next) => {
-    const pairs = await GiftExchange.pairs()
-    res.status(200).json(pairs)
+    try {
+        const pairs = await GiftExchange.pairs()
+        res.status(200).json(pairs)
+    }
+    catch(err) {
+    next(err)
+    }
 
 })
 
 router.post("/traditional", async (req,res,next) => {
-    const traditional = await GiftExchange.traditional()
-    res.status(200).json(traditional)
+    try {
+        const traditional = await GiftExchange.traditional()
+        res.status(200).json(traditional)
+    }
+    catch(err) {
+    next(err)
+    }
 
 }) 
 

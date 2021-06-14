@@ -1,3 +1,10 @@
+
+const Errors = require("../utils/errors")
+//const BadRequestError = Errors.BadRequestError
+//OR
+const {NotFoundError, BadRequestError} = require("../utils/errors")
+
+
 const names = ["me", "you", "them", "us", "her", "him", "they", "y'all"]
 
 
@@ -6,11 +13,16 @@ class GiftExchange {
         return names;
     }
 
-    static async pairs () {
+    static async pairs (users) {
         let firstName;
         let secondName;
+        let names = users;
         let pairedUsers = [];
         let arrays = [];
+
+        if (!(users.length %2 == 0)) {
+            throw new BadRequestError("The number of users should be even!")
+        }
         while (pairedUsers.length != names.length) {
             firstName = names[Math.floor(names.length* Math.random())];
             while (pairedUsers.includes(firstName)) {
@@ -33,7 +45,8 @@ class GiftExchange {
     return arrays;
 }
 
-     static async traditional () {
+     static async traditional (users) {
+         let names = users;
          let stringArray = [];
          for(let i=0; i < names.length; i++) {
              if (i != names.length-1) {
